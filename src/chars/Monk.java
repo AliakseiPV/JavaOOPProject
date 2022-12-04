@@ -1,19 +1,17 @@
+package chars;
+
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 public class Monk extends Base {
-    public Monk() {
-        super(12, 7, 0, new int[]{-4,-4}, 30,30, 5, false, true, "");
+    public Monk(List<Base> gang, int x, int y) {
+        super(12, 7, 0, new int[]{-4,-4}, 30,30, 5, false, true, "Monk");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Monk - " + super.toString();
-    }
-
-    @Override
-    public void Step(ArrayList<Base> group) {
+    public void Step(List<Base> group) {
         Base diyingNpc = null;
         var minHealth = 100.0;
 
@@ -32,6 +30,12 @@ public class Monk extends Base {
             diyingNpc.setCurrentHealth(diyingNpc.getMaxHealth());
         }
 
+    }
+
+    @Override
+    public String GetInfo() {
+        return  "Monk    - " +
+                "HP(30.0 - " + getCurrentHealth() + ")";
     }
 }
 

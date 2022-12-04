@@ -1,49 +1,53 @@
+import chars.*;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HeroTeam{
+    public static final int GANG_SIZE = 10;
+    public static List<Base> wizardTeam;
+    public static List<Base> monkTeam;
 
-    public ArrayList<Base> FindNpc(ArrayList<Base> team, String npcClassName)
-    {
-        ArrayList<Base> output= new ArrayList<>();
-        for (Base npc: team) {
-            if(npc.getClass().toString().toLowerCase().indexOf(npcClassName.toLowerCase()) > -1)
-                output.add(npc);
-        }
-        return output;
-    }
-
-    public ArrayList<Base> CreateWizardTeam(int heroCount)
+    public static void Init()
     {
         Random random = new Random();
-        ArrayList<Base> firstTeam = new ArrayList<>();
+        wizardTeam = new ArrayList<>();
+        monkTeam = new ArrayList<>();
 
-        for (int i = 0; i < heroCount; i++) {
+        int x=1;
+        int y=1;
+        for (int i = 0; i < GANG_SIZE; i++) {
             int value = random.nextInt(0,4);
             switch (value) {
-                case 0 -> firstTeam.add(new Peasant());
-                case 1 -> firstTeam.add(new Robber());
-                case 2 -> firstTeam.add(new Sniper());
-                case 3 -> firstTeam.add(new Wizard());
+                case 0 -> wizardTeam.add(new Peasant(wizardTeam,x++,y));
+                case 1 -> wizardTeam.add(new Robber(wizardTeam,x++,y));
+                case 2 -> wizardTeam.add(new Sniper(wizardTeam,x++,y));
+                case 3 -> wizardTeam.add(new Wizard(wizardTeam,x++,y));
             }
         }
-        return firstTeam;
-    }
 
-    public ArrayList<Base> CreateMonkTeam(int heroCount)
-    {
-        Random random = new Random();
-        ArrayList<Base> secondTeam = new ArrayList<>();
-
-        for (int i = 0; i < heroCount; i++) {
+        x=1;
+        y=10;
+        for (int i = 0; i < GANG_SIZE; i++) {
             int value = random.nextInt(0,4);
             switch (value) {
-                case 0 -> secondTeam.add(new Monk());
-                case 1 -> secondTeam.add(new Peasant());
-                case 2 -> secondTeam.add(new Spearman());
-                case 3 -> secondTeam.add(new Xbowman());
+                case 0 -> monkTeam.add(new Monk(monkTeam,x++,y));
+                case 1 -> monkTeam.add(new Peasant(monkTeam,x++,y));
+                case 2 -> monkTeam.add(new Spearman(monkTeam,x++,y));
+                case 3 -> monkTeam.add(new Xbowman(monkTeam,x++,y));
             }
         }
-        return secondTeam;
     }
+
+//    public ArrayList<Base> FindNpc(List<Base> team, String npcClassName)
+//    {
+//        ArrayList<Base> output= new ArrayList<>();
+//        for (Base npc: team) {
+//            if(npc.getClass().toString().toLowerCase().indexOf(npcClassName.toLowerCase()) > -1)
+//                output.add(npc);
+//        }
+//        return output;
+//    }
+
 }

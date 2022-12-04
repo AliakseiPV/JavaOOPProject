@@ -1,18 +1,23 @@
-import java.util.ArrayList;
+package chars;
+
+
+import java.util.List;
 
 public class Peasant extends Base {
-    public Peasant() {
-        super(1, 1, 0, new int[]{1,1}, 1,1, 3, true, false, "");
+    public Peasant(List<Base> gang, int x, int y) {
+        super(1, 1, 0, new int[]{1,1}, 1,1, 3, true, false, "Peasant");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Peasant - " + super.toString();
+    public void Step(List<Base> group) {
+
     }
 
     @Override
-    public void Step(ArrayList<Base> group) {
-
+    public String GetInfo() {
+        return "Peasant - " +
+                "HP(1.0 - " + getCurrentHealth() + ")  ";
     }
 }

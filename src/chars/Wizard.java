@@ -1,18 +1,16 @@
-import java.util.ArrayList;
+package chars;
+
+import java.util.List;
 
 public class Wizard extends Base {
-    public Wizard() {
-        super(17, 12, 0, new int[]{-5,-5}, 30, 30, 9, false, true, "");
+    public Wizard(List<Base> gang, int x, int y) {
+        super(17, 12, 0, new int[]{-5,-5}, 30, 30, 9, false, true, "Wizard");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Wizard - " + super.toString();
-    }
-
-    @Override
-    public void Step(ArrayList<Base> group) {
+    public void Step(List<Base> group) {
         Base diyingNpc = null;
         var minHealth = 100.0;
 
@@ -30,5 +28,11 @@ public class Wizard extends Base {
         {
             diyingNpc.setCurrentHealth(diyingNpc.getMaxHealth());
         }
+    }
+
+    @Override
+    public String GetInfo() {
+        return "Wizard  - " +
+                "HP(30.0 - " + getCurrentHealth() + ")";
     }
 }

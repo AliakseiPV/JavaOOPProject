@@ -1,19 +1,17 @@
-import java.util.ArrayList;
+package chars;
+
+import java.util.List;
 import java.util.Random;
 
 public class Sniper extends Base {
-    public Sniper() {
-        super(12, 10, 32, new int[]{8,10}, 15, 15, 9, false, false, "");
+    public Sniper(List<Base> gang, int x, int y) {
+        super(12, 10, 32, new int[]{8,10}, 15, 15, 9, false, false, "Sniper");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Sniper - " + super.toString();
-    }
-
-    @Override
-    public void Step(ArrayList<Base> group) {
+    public void Step(List<Base> group) {
         Random random = new Random();
 
         for (Base npc: group) {
@@ -26,7 +24,7 @@ public class Sniper extends Base {
                 }
                 break;
             }
-//            else if(!group.contains(Xbowman.class) && !group.contains(Spearman.class))
+//            else if(!group.contains(chars.Xbowman.class) && !group.contains(chars.Spearman.class))
 //            {
 //                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
 //                if(npc.getCurrentHealth() <= 0)
@@ -36,5 +34,11 @@ public class Sniper extends Base {
 //                break;
 //            }
         }
+    }
+
+    @Override
+    public String GetInfo() {
+        return "Sniper  - " +
+                "HP(15.0 - " + getCurrentHealth() + ")";
     }
 }

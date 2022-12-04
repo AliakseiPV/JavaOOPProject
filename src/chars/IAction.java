@@ -1,7 +1,10 @@
-import java.util.ArrayList;
+package chars;
+
+import java.util.List;
 
 public interface IAction {
-
-    void Step(ArrayList<Base> group);
-
+    void Step(List<Base> group);
+    String GetInfo();
 }
+
+

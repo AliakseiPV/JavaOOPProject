@@ -1,4 +1,7 @@
+package chars;
+
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Base implements IAction {
     private static int idCounter;
@@ -14,6 +17,8 @@ public abstract class Base implements IAction {
     private boolean magic;
     private String name;
     private int playerID;
+    protected List<Base> gang;
+    protected Vector2 position;
 
     public Base(int attack, int protection, int shoot, int[] damage,
                 double maxHealth, double currentHealth, int speed, boolean delivery,
@@ -31,22 +36,31 @@ public abstract class Base implements IAction {
         this.name = name;
         playerID = idCounter++;
     }
+
+    public Vector2 getPosition() {return position;}
+
     protected int[] getDamage(){
         return damage;
     }
+
     protected double getCurrentHealth() {
         return currentHealth;
     }
+
     protected void setCurrentHealth(double health) {
         currentHealth = health;
     }
+
     protected double getMaxHealth() {
         return maxHealth;
     }
 
+    public String getName() {return name;}
+
     @Override
     public String toString() {
-        return  "attack=" + attack +
+        return  name +
+                " - attack=" + attack +
                 ", protection=" + protection +
                 ", shoot=" + shoot +
                 ", damage=" + Arrays.toString(damage) +

@@ -1,19 +1,17 @@
-import java.util.ArrayList;
+package chars;
+
+import java.util.List;
 import java.util.Random;
 
 public class Robber extends Base{
-    public Robber() {
-        super(8, 3, 0, new int[]{2,4}, 10, 10, 6, false, false, "");
+    public Robber(List<Base> gang, int x, int y) {
+        super(8, 3, 0, new int[]{2,4}, 10, 10, 6, false, false, "Robber");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Robber - " + super.toString();
-    }
-
-    @Override
-    public void Step(ArrayList<Base> group) {
+    public void Step(List<Base> group) {
         Random random = new Random();
 
         for (Base npc: group) {
@@ -26,7 +24,7 @@ public class Robber extends Base{
                 }
                 break;
             }
-//            else if(!group.contains(Xbowman.class) && !group.contains(Spearman.class))
+//            else if(!group.contains(chars.Xbowman.class) && !group.contains(chars.Spearman.class))
 //            {
 //                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
 //                if(npc.getCurrentHealth() <= 0)
@@ -36,6 +34,12 @@ public class Robber extends Base{
 //                break;
 //            }
         }
+    }
+
+    @Override
+    public String GetInfo() {
+        return "Robber  - " +
+                "HP(10.0 - " + getCurrentHealth() + ")";
     }
 }
 

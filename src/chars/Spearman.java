@@ -1,19 +1,17 @@
-import java.util.ArrayList;
+package chars;
+
+import java.util.List;
 import java.util.Random;
 
 public class Spearman extends Base {
-    public Spearman() {
-        super(4, 5, 0, new int[]{1,3}, 10, 10, 4, false, false, "");
+    public Spearman(List<Base> gang, int x, int y) {
+        super(4, 5, 0, new int[]{1,3}, 10, 10, 4, false, false, "Spearman");
+        super.gang = gang;
+        super.position = new Vector2(x, y);
     }
 
     @Override
-    public String toString()
-    {
-        return "Spearman - " + super.toString();
-    }
-
-    @Override
-    public void Step(ArrayList<Base> group) {
+    public void Step(List<Base> group) {
         Random random = new Random();
 
             for (Base npc: group) {
@@ -26,7 +24,7 @@ public class Spearman extends Base {
                     }
                     break;
                 }
-//                else if(!group.contains(Sniper.class) && !group.contains(Robber.class))
+//                else if(!group.contains(chars.Sniper.class) && !group.contains(chars.Robber.class))
 //                {
 //                    npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
 //                    if(npc.getCurrentHealth() <= 0)
@@ -36,5 +34,11 @@ public class Spearman extends Base {
 //                    break;
 //                }
             }
+    }
+
+    @Override
+    public String GetInfo() {
+        return "Spearman- " +
+                "HP(10.0 - " + getCurrentHealth() + ")";
     }
 }
