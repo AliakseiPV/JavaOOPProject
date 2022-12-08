@@ -1,4 +1,5 @@
-import chars.*;
+package chars;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,12 @@ public class HeroTeam{
             }
         }
     }
-
+    public static boolean deadTeam(List<Base> team) {
+        for (Base npc : team) {
+            if (!npc.getStatus().equals("dead")) return false;
+        }
+        return true;
+    }
 //    public ArrayList<Base> FindNpc(List<Base> team, String npcClassName)
 //    {
 //        ArrayList<Base> output= new ArrayList<>();

@@ -1,8 +1,6 @@
 package chars;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Xbowman extends Base {
     public Xbowman(List<Base> gang, int x, int y) {
@@ -13,33 +11,59 @@ public class Xbowman extends Base {
 
     @Override
     public void Step(List<Base> group) {
-        Random random = new Random();
+        if(this.status.equals("dead")) return;
 
-        for (Base npc: group) {
-            if(npc.getClass() == Sniper.class || npc.getClass() == Robber.class)
+        for(Base npc: this.gang)
+        {
+            if(npc.getName().equals("Peasant") && npc.status.equals("stand"))
             {
-                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
-                if(npc.getCurrentHealth() <= 0)
-                {
-                    group.remove(npc);
-                }
+                this.shoot++;
+                npc.status = "used";
                 break;
             }
-//            else if(!group.contains(chars.Sniper.class) && !group.contains(chars.Robber.class))
-//            {
-//                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
-//                if(npc.getCurrentHealth() <= 0)
-//                {
-//                    group.remove(npc);
-//                }
-//                break;
-//            }
+        }
+        if(this.shoot < 1) return;
+
+        double minDistance = Double.MAX_VALUE;
+        int nearestIndex = 0;
+        for (int i = 0, j = 0; i < group.size(); i++)
+        {
+            if(!group.get(i).status.equals("dead"))
+            {
+                double temp = this.nearestDistance(group.get(i));
+                if(minDistance > temp)
+                {
+                    minDistance = temp;
+                    nearestIndex = i;
+                }
+            }else if(group.get(nearestIndex).status.equals("dead") && j < group.size() - 1){
+                while(j < group.size() - 1)
+                {
+                    if(!group.get(j).status.equals("dead")) break;
+                    else j++;
+                }
+                nearestIndex = j;
+                j = 0;
+            }
+        }
+        this.shoot--;
+
+        Base defendingNpc = group.get(nearestIndex);
+        double totalDamage = Damage(defendingNpc);
+
+        if(minDistance > this.getSpeed()){totalDamage = totalDamage / 2;}
+
+        defendingNpc.setCurrentHealth(defendingNpc.getCurrentHealth() - totalDamage);
+
+        if(defendingNpc.getCurrentHealth() <= 0){
+            defendingNpc.status = "dead";
         }
     }
 
     @Override
     public String GetInfo() {
         return "Xbowman - " +
+                "Status(" + status + "), " +
                 "HP(10.0 - " + getCurrentHealth() + ")";
     }
 }

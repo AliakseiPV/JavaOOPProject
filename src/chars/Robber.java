@@ -1,7 +1,7 @@
 package chars;
 
 import java.util.List;
-import java.util.Random;
+
 
 public class Robber extends Base{
     public Robber(List<Base> gang, int x, int y) {
@@ -12,34 +12,14 @@ public class Robber extends Base{
 
     @Override
     public void Step(List<Base> group) {
-        Random random = new Random();
 
-        for (Base npc: group) {
-            if(npc.getClass() == Xbowman.class || npc.getClass() == Spearman.class )
-            {
-                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
-                if(npc.getCurrentHealth() <= 0)
-                {
-                    group.remove(npc);
-                }
-                break;
-            }
-//            else if(!group.contains(chars.Xbowman.class) && !group.contains(chars.Spearman.class))
-//            {
-//                npc.setCurrentHealth(npc.getCurrentHealth() - random.nextInt(getDamage()[0],getDamage()[1]));
-//                if(npc.getCurrentHealth() <= 0)
-//                {
-//                    group.remove(npc);
-//                }
-//                break;
-//            }
-        }
     }
 
     @Override
     public String GetInfo() {
         return "Robber  - " +
-                "HP(10.0 - " + getCurrentHealth() + ")";
+                "Status(" + status + "), " +
+                "HP(10.0 - " + getCurrentHealth() + ") ";
     }
 }
 

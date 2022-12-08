@@ -5,10 +5,9 @@ import java.util.List;
 
 public abstract class Base implements IAction {
     private static int idCounter;
-
     private int attack;
     private int protection;
-    private int shoot;
+    protected int shoot;
     private int[] damage;
     private final double  maxHealth;
     private double currentHealth;
@@ -16,6 +15,7 @@ public abstract class Base implements IAction {
     private boolean delivery;
     private boolean magic;
     private String name;
+    protected String status;
     private int playerID;
     protected List<Base> gang;
     protected Vector2 position;
@@ -34,28 +34,47 @@ public abstract class Base implements IAction {
         this.delivery = delivery;
         this.magic = magic;
         this.name = name;
+        this.status = "stand";
         playerID = idCounter++;
     }
 
     public Vector2 getPosition() {return position;}
+    public String getName() {return name;}
+    public String getStatus(){return status;}
 
+    protected int getSpeed(){return speed;}
     protected int[] getDamage(){
         return damage;
     }
-
     protected double getCurrentHealth() {
         return currentHealth;
     }
-
     protected void setCurrentHealth(double health) {
         currentHealth = health;
     }
-
     protected double getMaxHealth() {
         return maxHealth;
     }
 
-    public String getName() {return name;}
+    protected double Damage(Base npc){
+        double totalDamage = 0.0;
+        double damage = this.attack - npc.protection;
+
+        if(damage == 0)
+        {
+            totalDamage = (this.damage[0] + this.damage[1])/2;
+        }
+        else if(damage > 0){totalDamage = this.damage[1];}
+        else if(damage < 0){totalDamage = this.damage[0];}
+
+        return totalDamage;
+    }
+
+    protected double nearestDistance(Base hero)
+    {
+        return Math.sqrt((hero.getPosition().x - this.getPosition().x)^2
+                + (hero.getPosition().y - this.getPosition().y)^2);
+    }
 
     @Override
     public String toString() {

@@ -12,12 +12,14 @@ public class Peasant extends Base {
 
     @Override
     public void Step(List<Base> group) {
-
+        if(this.status.equals("dead")) return;
+        if(this.status.equals("used")) this.status = "stand";
     }
 
     @Override
     public String GetInfo() {
         return "Peasant - " +
+                "Status(" + status + "), " +
                 "HP(1.0 - " + getCurrentHealth() + ")  ";
     }
 }

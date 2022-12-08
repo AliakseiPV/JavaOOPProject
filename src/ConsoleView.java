@@ -1,4 +1,5 @@
 
+import chars.HeroTeam;
 import chars.Vector2;
 import java.util.Collections;
 
@@ -20,7 +21,7 @@ public class ConsoleView {
             System.out.print(AnsiColors.ANSI_BLUE +
                     String.join("", Collections.nCopies(20, formatDiv(" "))) + "Blue Team" + AnsiColors.ANSI_RESET);
             System.out.println(AnsiColors.ANSI_GREEN +
-                    String.join("", Collections.nCopies(20, formatDiv(" "))) + "Green Team" + AnsiColors.ANSI_RESET);
+                    String.join("", Collections.nCopies(40, formatDiv(" "))) + "Green Team" + AnsiColors.ANSI_RESET);
         }
 
         System.out.println(ConsoleView.top10);
@@ -42,8 +43,8 @@ public class ConsoleView {
             System.out.print(getChar(new Vector2(10, j)));
         }
         System.out.print("|");
-        System.out.print(PrintInfo(new Vector2(blueX++, blueY), npcIndex));
-        System.out.println(PrintInfo(new Vector2(greenX++, greenY), npcIndex));
+        System.out.print(PrintInfo(new Vector2(blueX++, blueY), npcIndex ));
+        System.out.println(PrintInfo(new Vector2(greenX++, greenY), npcIndex ));
         System.out.println(ConsoleView.bottom10);
     }
 
@@ -57,7 +58,7 @@ public class ConsoleView {
             }
             if (HeroTeam.wizardTeam.get(i).getPosition().isEqual(position))
             {
-                str ="|"+AnsiColors.ANSI_BLUE+HeroTeam.wizardTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                str ="|"+AnsiColors.ANSI_BLUE+ HeroTeam.wizardTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
             }
         }
         return str;
@@ -69,11 +70,15 @@ public class ConsoleView {
 
             if (HeroTeam.monkTeam.get(i).getPosition().isEqual(position))
             {
-                str ="     " + AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
+                if(HeroTeam.monkTeam.get(i).getStatus().equals("dead"))
+                    str ="     " + AnsiColors.ANSI_RED+HeroTeam.monkTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
+                else str ="     " + AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
             }
             if (HeroTeam.wizardTeam.get(i).getPosition().isEqual(position))
             {
-                str ="   " + AnsiColors.ANSI_BLUE+HeroTeam.wizardTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
+                if(HeroTeam.wizardTeam.get(i).getStatus().equals("dead"))
+                    str ="   " + AnsiColors.ANSI_RED+HeroTeam.wizardTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
+                else str ="   " + AnsiColors.ANSI_BLUE+HeroTeam.wizardTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
             }
         return str;
     }

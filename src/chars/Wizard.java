@@ -11,6 +11,8 @@ public class Wizard extends Base {
 
     @Override
     public void Step(List<Base> group) {
+        if(this.status.equals("dead")) return;
+
         Base diyingNpc = null;
         var minHealth = 100.0;
 
@@ -33,6 +35,7 @@ public class Wizard extends Base {
     @Override
     public String GetInfo() {
         return "Wizard  - " +
+                "Status(" + status + "), " +
                 "HP(30.0 - " + getCurrentHealth() + ")";
     }
 }
