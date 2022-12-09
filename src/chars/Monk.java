@@ -15,9 +15,9 @@ public class Monk extends Base {
         if(this.status.equals("dead")) return;
 
         Base diyingNpc = null;
-        var minHealth = 100.0;
+        double minHealth = Double.MAX_VALUE;
 
-        for (Base npc: group) {
+        for (Base npc: this.gang) {
             var temp = npc.getMaxHealth() - npc.getCurrentHealth();
             if(temp < minHealth)
             {
@@ -26,7 +26,7 @@ public class Monk extends Base {
             }
         }
 
-        diyingNpc.setCurrentHealth(diyingNpc.getCurrentHealth() - getDamage()[0]);
+        diyingNpc.setCurrentHealth(diyingNpc.getCurrentHealth() - this.getDamage()[0]);
         if(diyingNpc.getMaxHealth() < diyingNpc.getCurrentHealth())
         {
             diyingNpc.setCurrentHealth(diyingNpc.getMaxHealth());

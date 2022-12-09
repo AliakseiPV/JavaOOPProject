@@ -1,5 +1,6 @@
 package chars;
 
+import javax.swing.text.Position;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public abstract class Base implements IAction {
     }
 
     public Vector2 getPosition() {return position;}
+    public void setPosition(Vector2 position){this.position = position;}
     public String getName() {return name;}
     public String getStatus(){return status;}
-
     protected int getSpeed(){return speed;}
     protected int[] getDamage(){
         return damage;
@@ -72,8 +73,44 @@ public abstract class Base implements IAction {
 
     protected double nearestDistance(Base hero)
     {
-        return Math.sqrt((hero.getPosition().x - this.getPosition().x)^2
-                + (hero.getPosition().y - this.getPosition().y)^2);
+        return Math.sqrt((hero.getPosition().x - this.getPosition().x) * (hero.getPosition().x - this.getPosition().x)
+                + (hero.getPosition().y - this.getPosition().y) * (hero.getPosition().y - this.getPosition().y));
+    }
+
+    protected int findAim(List<Base> group)
+    {
+        double minDistance = Double.MAX_VALUE;
+        int nearestIndex = 0;
+        for (int i = 0, j = 0; i < group.size(); i++)
+        {
+            if(!group.get(i).status.equals("dead"))
+            {
+                double temp = this.nearestDistance(group.get(i));
+                if(minDistance > temp)
+                {
+                    minDistance = temp;
+                    nearestIndex = i;
+                }
+            }else if(group.get(nearestIndex).status.equals("dead") && j < group.size() - 1){
+                while(j < group.size() - 1)
+                {
+                    if(!group.get(j).status.equals("dead")) break;
+                    else j++;
+                }
+                nearestIndex = j;
+                j = 0;
+            }
+        }
+        return nearestIndex;
+    }
+
+    protected boolean checkPosition( Vector2 position)
+    {
+        for (Base npc: this.gang) {
+            if(npc.getPosition().isEqual(position))
+                return false;
+        }
+        return true;
     }
 
     @Override

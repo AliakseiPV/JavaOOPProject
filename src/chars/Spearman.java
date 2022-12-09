@@ -12,6 +12,31 @@ public class Spearman extends Base {
 
     @Override
     public void Step(List<Base> group) {
+        if(this.status.equals("dead")) return;
+
+        int nearestIndex = findAim(group);
+        Base aimNpc = group.get(nearestIndex);
+        double totalDamage = Damage(aimNpc);
+
+        if(nearestDistance(aimNpc) <= 1)
+        {
+            aimNpc.setCurrentHealth(aimNpc.getCurrentHealth() - totalDamage);
+            if(aimNpc.getCurrentHealth() <= 0){
+                aimNpc.status = "dead";
+            }
+            return;
+        }
+        int x = getPosition().x;
+        int y = getPosition().y;
+
+        if(aimNpc.getPosition().y > getPosition().y && checkPosition(new Vector2(x, ++y)))
+            setPosition(new Vector2(x, y));
+        else if(aimNpc.getPosition().y < getPosition().y && checkPosition(new Vector2(x, --y)))
+            setPosition(new Vector2(x, y));
+        else if(aimNpc.getPosition().x < getPosition().x && checkPosition(new Vector2(--x, y)))
+            setPosition(new Vector2(x, y));
+        else if(aimNpc.getPosition().x > getPosition().x && checkPosition(new Vector2(++x, y)))
+            setPosition(new Vector2(x, y));
 
     }
 

@@ -24,28 +24,8 @@ public class Xbowman extends Base {
         }
         if(this.shoot < 1) return;
 
-        double minDistance = Double.MAX_VALUE;
-        int nearestIndex = 0;
-        for (int i = 0, j = 0; i < group.size(); i++)
-        {
-            if(!group.get(i).status.equals("dead"))
-            {
-                double temp = this.nearestDistance(group.get(i));
-                if(minDistance > temp)
-                {
-                    minDistance = temp;
-                    nearestIndex = i;
-                }
-            }else if(group.get(nearestIndex).status.equals("dead") && j < group.size() - 1){
-                while(j < group.size() - 1)
-                {
-                    if(!group.get(j).status.equals("dead")) break;
-                    else j++;
-                }
-                nearestIndex = j;
-                j = 0;
-            }
-        }
+        int nearestIndex = findAim(group);
+        double minDistance = nearestDistance(group.get(nearestIndex));
         this.shoot--;
 
         Base defendingNpc = group.get(nearestIndex);

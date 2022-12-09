@@ -1,7 +1,5 @@
-
-
+import chars.Base;
 import chars.HeroTeam;
-
 
 import java.util.Scanner;
 
@@ -20,7 +18,6 @@ public class Main {
             if(HeroTeam.deadTeam(HeroTeam.monkTeam) || HeroTeam.deadTeam(HeroTeam.wizardTeam))
             {
                 ConsoleView.view();
-
                 System.out.println("End");
                 break;
             }
@@ -41,9 +38,9 @@ public class Main {
 
         for (int i = 0; i < HeroTeam.GANG_SIZE; i++) {
             if(HeroTeam.monkTeam.get(i).getName().equals("Monk"))
-                HeroTeam.monkTeam.get(i).Step(HeroTeam.monkTeam);
+                HeroTeam.monkTeam.get(i).Step(HeroTeam.wizardTeam);
             if(HeroTeam.wizardTeam.get(i).getName().equals("Wizard"))
-                HeroTeam.wizardTeam.get(i).Step(HeroTeam.wizardTeam);
+                HeroTeam.wizardTeam.get(i).Step(HeroTeam.monkTeam);
         }
 
         for (int i = 0; i < HeroTeam.GANG_SIZE; i++) {

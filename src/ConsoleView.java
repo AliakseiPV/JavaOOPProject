@@ -26,15 +26,14 @@ public class ConsoleView {
 
         System.out.println(ConsoleView.top10);
 
-        int npcIndex = 0, blueX = 1 , blueY = 1, greenX = 1, greenY = 10;
+        int npcIndex = 0;
 
-        for (int i = 1 , l = 0; i <= HeroTeam.GANG_SIZE - 1; i++, l++) {
+        for (int i = 1; i <= HeroTeam.GANG_SIZE - 1; i++) {
             for (int j = 1; j <= HeroTeam.GANG_SIZE; j++) {
                 System.out.print(getChar(new Vector2(i, j)));
             }
             System.out.print("|");
-            System.out.print(PrintInfo(new Vector2(blueX++, blueY), npcIndex));
-            System.out.println(PrintInfo(new Vector2(greenX++, greenY), npcIndex));
+            System.out.println(PrintInfo(npcIndex));
             System.out.println(ConsoleView.mid10);
             npcIndex++;
         }
@@ -43,43 +42,45 @@ public class ConsoleView {
             System.out.print(getChar(new Vector2(10, j)));
         }
         System.out.print("|");
-        System.out.print(PrintInfo(new Vector2(blueX++, blueY), npcIndex ));
-        System.out.println(PrintInfo(new Vector2(greenX++, greenY), npcIndex ));
+        System.out.println(PrintInfo(npcIndex));
         System.out.println(ConsoleView.bottom10);
     }
 
     private static String getChar(Vector2 position){
 
         String str = "| ";
+        boolean alive = false;
         for (int i = 0; i < HeroTeam.GANG_SIZE; i++) {
             if (HeroTeam.monkTeam.get(i).getPosition().isEqual(position))
             {
-                str ="|"+AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                if(HeroTeam.monkTeam.get(i).getStatus().equals("dead"))
+                    str ="|"+AnsiColors.ANSI_RED+HeroTeam.monkTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                else {
+                    str ="|"+AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                    alive = true;
+                }
             }
-            if (HeroTeam.wizardTeam.get(i).getPosition().isEqual(position))
+            if (HeroTeam.wizardTeam.get(i).getPosition().isEqual(position) && !alive)
             {
-                str ="|"+AnsiColors.ANSI_BLUE+ HeroTeam.wizardTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                if(HeroTeam.wizardTeam.get(i).getStatus().equals("dead"))
+                    str ="|"+AnsiColors.ANSI_RED+ HeroTeam.wizardTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+                else str ="|"+AnsiColors.ANSI_BLUE+ HeroTeam.wizardTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
             }
         }
         return str;
     }
 
-    private static String PrintInfo(Vector2 position, int i)
+    private static String PrintInfo(int npcIndex)
     {
         String str = "";
 
-            if (HeroTeam.monkTeam.get(i).getPosition().isEqual(position))
-            {
-                if(HeroTeam.monkTeam.get(i).getStatus().equals("dead"))
-                    str ="     " + AnsiColors.ANSI_RED+HeroTeam.monkTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
-                else str ="     " + AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
-            }
-            if (HeroTeam.wizardTeam.get(i).getPosition().isEqual(position))
-            {
-                if(HeroTeam.wizardTeam.get(i).getStatus().equals("dead"))
-                    str ="   " + AnsiColors.ANSI_RED+HeroTeam.wizardTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
-                else str ="   " + AnsiColors.ANSI_BLUE+HeroTeam.wizardTeam.get(i).GetInfo()+AnsiColors.ANSI_RESET;
-            }
+        if(HeroTeam.wizardTeam.get(npcIndex).getStatus().equals("dead"))
+            str +="     " + AnsiColors.ANSI_RED+HeroTeam.wizardTeam.get(npcIndex).GetInfo()+AnsiColors.ANSI_RESET;
+        else str +="     " + AnsiColors.ANSI_BLUE+HeroTeam.wizardTeam.get(npcIndex).GetInfo()+AnsiColors.ANSI_RESET;
+        if(HeroTeam.monkTeam.get(npcIndex).getStatus().equals("dead"))
+            str +="     " + AnsiColors.ANSI_RED+HeroTeam.monkTeam.get(npcIndex).GetInfo()+AnsiColors.ANSI_RESET;
+        else str +="     " + AnsiColors.ANSI_GREEN+HeroTeam.monkTeam.get(npcIndex).GetInfo()+AnsiColors.ANSI_RESET;
+
         return str;
     }
 
