@@ -44,11 +44,9 @@ public class Main {
         }
 
         for (int i = 0; i < HeroTeam.GANG_SIZE; i++) {
-            if(HeroTeam.monkTeam.get(i).getName().equals("Peasant") &&
-                    HeroTeam.monkTeam.get(i).getStatus().equals("Stand"))
+            if(HeroTeam.monkTeam.get(i).getName().equals("Peasant"))
                 HeroTeam.monkTeam.get(i).Step(HeroTeam.wizardTeam);
-            if(HeroTeam.wizardTeam.get(i).getName().equals("Peasant") &&
-                    HeroTeam.monkTeam.get(i).getStatus().equals("Stand"))
+            if(HeroTeam.wizardTeam.get(i).getName().equals("Peasant"))
                 HeroTeam.wizardTeam.get(i).Step(HeroTeam.monkTeam);
         }
     }

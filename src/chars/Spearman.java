@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Spearman extends Base {
-    public Spearman(List<Base> gang, int x, int y) {
+    public Spearman(List<Base> gang, int x, int y, int amount) {
         super(4, 5, 0, new int[]{1,3}, 10, 10, 4, false, false, "Spearman");
         super.gang = gang;
         super.position = new Vector2(x, y);
+        super.amount = amount;
     }
 
     @Override
@@ -20,10 +21,8 @@ public class Spearman extends Base {
 
         if(nearestDistance(aimNpc) <= 1)
         {
-            aimNpc.setCurrentHealth(aimNpc.getCurrentHealth() - totalDamage);
-            if(aimNpc.getCurrentHealth() <= 0){
-                aimNpc.status = "dead";
-            }
+            aimNpc.getDamage(totalDamage);
+            checkTheDead(aimNpc);
             return;
         }
         int x = getPosition().x;
@@ -42,7 +41,7 @@ public class Spearman extends Base {
 
     @Override
     public String GetInfo() {
-        return "Spearman- " +
+        return "Spearman(" + amount +") - " +
                 "Status(" + status + "), " +
                 "HP(10.0 - " + getCurrentHealth() + ")";
     }

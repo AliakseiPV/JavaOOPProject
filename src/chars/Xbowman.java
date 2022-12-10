@@ -3,10 +3,11 @@ package chars;
 import java.util.List;
 
 public class Xbowman extends Base {
-    public Xbowman(List<Base> gang, int x, int y) {
+    public Xbowman(List<Base> gang, int x, int y, int amount) {
         super(6, 3, 16, new int[]{2,3}, 10, 10, 4, false, false, "Xbowman");
         super.gang = gang;
         super.position = new Vector2(x, y);
+        super.amount = amount;
     }
 
     @Override
@@ -33,16 +34,14 @@ public class Xbowman extends Base {
 
         if(minDistance > this.getSpeed()){totalDamage = totalDamage / 2;}
 
-        defendingNpc.setCurrentHealth(defendingNpc.getCurrentHealth() - totalDamage);
+        defendingNpc.getDamage(totalDamage);
 
-        if(defendingNpc.getCurrentHealth() <= 0){
-            defendingNpc.status = "dead";
-        }
+        checkTheDead(defendingNpc);
     }
 
     @Override
     public String GetInfo() {
-        return "Xbowman - " +
+        return "Xbowman(" + amount +") - " +
                 "Status(" + status + "), " +
                 "HP(10.0 - " + getCurrentHealth() + ")";
     }

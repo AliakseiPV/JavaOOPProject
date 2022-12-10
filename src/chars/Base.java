@@ -1,11 +1,9 @@
 package chars;
 
-import javax.swing.text.Position;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Base implements IAction {
-    private static int idCounter;
     private int attack;
     private int protection;
     protected int shoot;
@@ -17,9 +15,9 @@ public abstract class Base implements IAction {
     private boolean magic;
     private String name;
     protected String status;
-    private int playerID;
     protected List<Base> gang;
     protected Vector2 position;
+    protected int amount;
 
     public Base(int attack, int protection, int shoot, int[] damage,
                 double maxHealth, double currentHealth, int speed, boolean delivery,
@@ -35,8 +33,8 @@ public abstract class Base implements IAction {
         this.delivery = delivery;
         this.magic = magic;
         this.name = name;
+        this.amount = 1;
         this.status = "stand";
-        playerID = idCounter++;
     }
 
     public Vector2 getPosition() {return position;}
@@ -56,6 +54,12 @@ public abstract class Base implements IAction {
     protected double getMaxHealth() {
         return maxHealth;
     }
+    protected void checkTheDead(Base npc){if(npc.amount <= 0) npc.status = "dead";}
+    protected boolean checkHp(Base npc){
+        if(npc.maxHealth * 70/100 >= npc.currentHealth)
+            return true;
+        return false;
+    }
 
     protected double Damage(Base npc){
         double totalDamage = 0.0;
@@ -68,9 +72,23 @@ public abstract class Base implements IAction {
         else if(damage > 0){totalDamage = this.damage[1];}
         else if(damage < 0){totalDamage = this.damage[0];}
 
-        return totalDamage;
+        return totalDamage * this.amount;
     }
 
+    protected void getDamage(double damage)
+    {
+        double stackHp = (this.amount - 1) * maxHealth + currentHealth;
+        stackHp -= damage;
+        if(stackHp <= 0)
+        {
+            amount = 0; currentHealth = 0;
+        }
+        amount = (int)(stackHp/ maxHealth);
+        if(stackHp % maxHealth != 0) {
+            currentHealth = stackHp - amount * maxHealth;
+            amount+=1;
+        }
+    }
     protected double nearestDistance(Base hero)
     {
         return Math.sqrt((hero.getPosition().x - this.getPosition().x) * (hero.getPosition().x - this.getPosition().x)

@@ -3,10 +3,11 @@ package chars;
 import java.util.List;
 
 public class Sniper extends Base {
-    public Sniper(List<Base> gang, int x, int y) {
+    public Sniper(List<Base> gang, int x, int y, int amount) {
         super(12, 10, 32, new int[]{8,10}, 15, 15, 9, false, false, "Sniper");
         super.gang = gang;
         super.position = new Vector2(x, y);
+        super.amount = amount;
     }
 
     @Override
@@ -33,16 +34,14 @@ public class Sniper extends Base {
 
         if(minDistance > this.getSpeed()){totalDamage = totalDamage / 2;}
 
-        defendingNpc.setCurrentHealth(defendingNpc.getCurrentHealth() - totalDamage);
+        defendingNpc.getDamage(totalDamage);
 
-        if(defendingNpc.getCurrentHealth() <= 0){
-            defendingNpc.status = "dead";
-        }
+        checkTheDead(defendingNpc);
     }
 
     @Override
     public String GetInfo() {
-        return "Sniper  - " +
+        return "Sniper(" + amount +")  - " +
                 "Status(" + status + "), " +
                 "HP(15.0 - " + getCurrentHealth() + ")";
     }

@@ -21,10 +21,10 @@ public class HeroTeam{
         for (int i = 0; i < GANG_SIZE; i++) {
             int value = random.nextInt(0,4);
             switch (value) {
-                case 0 -> wizardTeam.add(new Peasant(wizardTeam,x++,y));
-                case 1 -> wizardTeam.add(new Robber(wizardTeam,x++,y));
-                case 2 -> wizardTeam.add(new Sniper(wizardTeam,x++,y));
-                case 3 -> wizardTeam.add(new Wizard(wizardTeam,x++,y));
+                case 0 -> wizardTeam.add(new Peasant(wizardTeam,x++,y,100));
+                case 1 -> wizardTeam.add(new Robber(wizardTeam,x++,y,50));
+                case 2 -> wizardTeam.add(new Sniper(wizardTeam,x++,y,5));
+                case 3 -> wizardTeam.add(new Wizard(wizardTeam,x++,y,20));
             }
         }
 
@@ -33,10 +33,10 @@ public class HeroTeam{
         for (int i = 0; i < GANG_SIZE; i++) {
             int value = random.nextInt(0,4);
             switch (value) {
-                case 0 -> monkTeam.add(new Monk(monkTeam,x++,y));
-                case 1 -> monkTeam.add(new Peasant(monkTeam,x++,y));
-                case 2 -> monkTeam.add(new Spearman(monkTeam,x++,y));
-                case 3 -> monkTeam.add(new Xbowman(monkTeam,x++,y));
+                case 0 -> monkTeam.add(new Monk(monkTeam,x++,y,20));
+                case 1 -> monkTeam.add(new Peasant(monkTeam,x++,y,100));
+                case 2 -> monkTeam.add(new Spearman(monkTeam,x++,y,50));
+                case 3 -> monkTeam.add(new Xbowman(monkTeam,x++,y,30));
             }
         }
     }
